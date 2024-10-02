@@ -1,0 +1,29 @@
+{
+    "name": "@ofrepose/logtastic",
+    "version": "1.0.7",
+    "description": "Provides a flexible way to log messages with customizable colors, styles, and backgrounds.",
+    "license": "MIT",
+    "repository": "ofrepose/logtastic",
+    "main": "index.js",
+    "keywords": [
+        "log",
+        "npm",
+        "package",
+        "ofrepose",
+        "logger",
+        "style",
+        "color",
+        "colour",
+        "colors",
+        "console",
+        "cli",
+        "styles",
+        "tty",
+        "formatting",
+        "rgb",
+        "shell",
+        "terminal",
+        "logging",
+        "text"
+    ]
+}
