@@ -79,144 +79,6 @@ class Logtastic {
 
     /**
      *
-     * This function returns helper message and give detail of tool overview.
-     *
-     * @returns {void}
-     */
-    help() {
-        this.log(`   
-┓          • 
-┃ ┏┓┏┓╋┏┓┏╋┓┏
-┗┛┗┛┗┫┗┗┻┛┗┗┗
-     ┛ ┓   ┓  
-       ┣┓┏┓┃┏┓
-       ┛┗┗ ┗┣┛
-            ┛`)
-        this.log(`
-Logtastic is a versatile Node.js logging utility that allows you to easily log messages, warnings, and errors with customizable formatting options. 
-It provides flexibility in adjusting text color, style, background color, and more. 
-You can also choose to log messages to files, databases, or both.
-`, { style: 'dim' });
-        this.log(`Usage:`, { style: 'bold', color: 'blue' });
-        this.log(`NodeJS:  const logger = require('@ofrepose/logtastic');
-ReactJS: import Logtastic from '@ofrepose/logtastic';`,
-            { color: 'blue' });
-        this.log(`
-Example Usage: 
-logger.log(data, { color: "blue", bgStyle: "yellow" });
-logger.warn('example text' { color: "yellow", style: "underline" });
-logger.err(err, { escape: false });`,
-            { color: 'olive' });
-        this.log(`
-Colors:`, { style: 'doubleUnderline', color: 'blue' });
-        this.log(`reset         black
-red           green
-yellow        blue
-magenta       cyan
-white         gray
-brightRed     brightGreen
-brightYellow  brightBlue
-brightMagenta brightCyan
-brightWhite   orange
-pink          teal
-lavender      turquoise
-gold          maroon
-navy          olive
-deepPurple    lime
-indigo        skyBlue
-lightPink     salmon
-darkGreen     darkCyan
-darkBlue`,
-            { color: 'blue' });
-
-        this.log(`
-bgStyle: (Background Style)`, { style: 'doubleUnderline', color: 'blue' });
-        this.log(`black         red
-green         yellow
-blue          magenta
-cyan          white`,
-            { color: 'blue' });
-        this.log(`
-style`, { style: 'doubleUnderline', color: 'blue' });
-        this.log(`reset         bold
-dim           italic
-underline     inverse
-hidden        strikethrough
-blink         rapidBlink
-overline      doubleUnderline`,
-            { color: 'blue' });
-
-        this.log(`
-logger.log(text, options)
-
-Log a message with customizable formatting options.
-
-- text: The message text or object to be logged.
-- options: An object containing formatting options such as:
-    - color: Text color for the message.
-    - style: Text style for the message.
-    - bgStyle: Background style for the message.
-    - time: Whether to include a timestamp in the message (default: false).
-    - override: Forcefully override the logging mode (default: false).
-    - trace: Whether to include stack trace information (default: false).
-
-logger.warn(text, options)
-
-Log a warning message with customizable formatting options.
-
-- text: The warning message text or object to be logged.
-- options: An object containing formatting options such as:
-    - color: Text color for the warning message.
-    - style: Text style for the warning message.
-    - bgStyle: Background style for the warning message.
-    - time: Whether to include a timestamp in the message (default: false).
-    - override: Forcefully override the logging mode (default: false).
-    - trace: Whether to include stack trace information (default: false).
-
-logger.err(text, options)
-
-Log an error message with customizable formatting options.
-
-- text: The error message text or object to be logged.
-- options: An object containing formatting options such as:
-    - color: Text color for the error message.
-    - style: Text style for the error message.
-    - bgStyle: Background style for the error message.
-    - time: Whether to include a timestamp in the message (default: true).
-    - override: Forcefully override the logging mode (default: false).
-    - trace: Whether to include stack trace information (default: true).
-    - escape: Whether to forcefully exit the application after logging (default: true).
-
-logger.setMode(options)
-
-Set the logging mode to control log visibility.
-
-- options: An object containing a silent property. If silent is true, logs will not be visible.
-
-logger.setDefaults(options)
-
-Set default log message formatting options.
-
-- options: An object containing options to update default formatting settings, including:
-    - color: Default text color.
-    - style: Default text style.
-    - bgStyle: Default background style.
-    - type: Type of log you are editing default type for ('log', 'warn', or 'err').
-
-logger.getMode()
-
-Display the current logging mode and its configuration.
-
-logger.getDefaults()
-
-Display the default settings and provide instructions on modifying them.`, { style: 'dim' });
-    }
-
-
-
-
-    /**
-     *
      * This function logs a message with customizable color, style, and background. The content
      * of the message and its formatting can be customized using the 'text' parameter and the
      * 'options' object. If the 'override' option is true, the message is displayed regardless
@@ -428,7 +290,9 @@ Display the default settings and provide instructions on modifying them.`, { sty
      *     Possible values: 'reset', 'bold', 'dim', 'italic', 'underline', 'inverse', 'hidden', 'strikethrough'.
      *   @param {string} [options.bgStyle] - The background color to set as the default.
      *     Possible values: 'black', 'red', 'green', 'yellow', 'blue', 'magenta', 'cyan', 'white'.
-     * @returns {void}
+     *   @param {string} [options.type] - The type of log you are setting the default of.
+     *     Possible values: 'log', 'warn', 'err'
+     * @returns {void}ll
      */
     setDefaults(options = {}) {
         const { color, style, bgStyle, type } = options;
@@ -444,10 +308,10 @@ Display the default settings and provide instructions on modifying them.`, { sty
 
         let status = '';
 
-        if (color) {
+        if (color) {l
             if (!this.colors[color]) {
                 this.log(
-                    `The color '${color}' is not valid.`,
+                    `The color '${color}' is not valid.\nPlease choose from the following options:${Object.keys(this.colors).map((item) => ' ' + item)}`,
                     { color: 'red', override: true }
                 );
             } else {
@@ -459,7 +323,7 @@ Display the default settings and provide instructions on modifying them.`, { sty
         if (style) {
             if (!this.styles[style]) {
                 this.log(
-                    `The style '${style}' is not valid.`,
+                    `The style '${style}' is not valid.\nPlease choose from the following options:${Object.keys(this.styles).map((item) => ' ' + item)}`,
                     { color: 'red', override: true }
                 );
             } else {
@@ -471,7 +335,7 @@ Display the default settings and provide instructions on modifying them.`, { sty
         if (bgStyle) {
             if (!this.bg[bgStyle]) {
                 this.log(
-                    `The background style '${bgStyle}' is not valid.`,
+                    `The background style '${bgStyle}' is not valid.\nPlease choose from the following options:${Object.keys(this.bg).map((item) => ' ' + item)}`,
                     { color: 'red', override: true }
                 );
             } else {
@@ -522,6 +386,146 @@ Display the default settings and provide instructions on modifying them.`, { sty
             { override: true }
         )
     }
+
+
+
+    /**
+     *
+     * This function returns helper message and give detail of tool overview.
+     *
+     * @returns {void}
+     */
+    help() {
+        this.log(`   
+┓          • 
+┃ ┏┓┏┓╋┏┓┏╋┓┏
+┗┛┗┛┗┫┗┗┻┛┗┗┗
+     ┛ ┓   ┓  
+       ┣┓┏┓┃┏┓
+       ┛┗┗ ┗┣┛
+            ┛`)
+        this.log(`
+Logtastic is a versatile Node.js logging utility that allows you to easily log messages, warnings, and errors with customizable formatting options. 
+It provides flexibility in adjusting text color, style, background color, and more. 
+You can also choose to log messages to files, databases, or both.
+`, { style: 'dim' });
+        this.log(`Usage:`, { style: 'bold', color: 'blue' });
+        this.log(`NodeJS:  const logger = require('@ofrepose/logtastic');
+ReactJS: import Logtastic from '@ofrepose/logtastic';`,
+            { color: 'blue' });
+        this.log(`
+Example Usage: 
+logger.log(data, { color: "blue", bgStyle: "yellow" });
+logger.warn('example text' { color: "yellow", style: "underline" });
+logger.err(err, { escape: false });`,
+            { color: 'olive' });
+        this.log(`
+Colors:`, { style: 'doubleUnderline', color: 'blue' });
+        this.log(`reset         black
+red           green
+yellow        blue
+magenta       cyan
+white         gray
+brightRed     brightGreen
+brightYellow  brightBlue
+brightMagenta brightCyan
+brightWhite   orange
+pink          teal
+lavender      turquoise
+gold          maroon
+navy          olive
+deepPurple    lime
+indigo        skyBlue
+lightPink     salmon
+darkGreen     darkCyan
+darkBlue`,
+            { color: 'blue' });
+
+        this.log(`
+bgStyle: (Background Style)`, { style: 'doubleUnderline', color: 'blue' });
+        this.log(`black         red
+green         yellow
+blue          magenta
+cyan          white`,
+            { color: 'blue' });
+        this.log(`
+style`, { style: 'doubleUnderline', color: 'blue' });
+        this.log(`reset         bold
+dim           italic
+underline     inverse
+hidden        strikethrough
+blink         rapidBlink
+overline      doubleUnderline`,
+            { color: 'blue' });
+
+        this.log(`
+logger.log(text, options)
+
+Log a message with customizable formatting options.
+
+- text: The message text or object to be logged.
+- options: An object containing formatting options such as:
+    - color: Text color for the message.
+    - style: Text style for the message.
+    - bgStyle: Background style for the message.
+    - time: Whether to include a timestamp in the message (default: false).
+    - override: Forcefully override the logging mode (default: false).
+    - trace: Whether to include stack trace information (default: false).
+
+logger.warn(text, options)
+
+Log a warning message with customizable formatting options.
+
+- text: The warning message text or object to be logged.
+- options: An object containing formatting options such as:
+    - color: Text color for the warning message.
+    - style: Text style for the warning message.
+    - bgStyle: Background style for the warning message.
+    - time: Whether to include a timestamp in the message (default: false).
+    - override: Forcefully override the logging mode (default: false).
+    - trace: Whether to include stack trace information (default: false).
+
+logger.err(text, options)
+
+Log an error message with customizable formatting options.
+
+- text: The error message text or object to be logged.
+- options: An object containing formatting options such as:
+    - color: Text color for the error message.
+    - style: Text style for the error message.
+    - bgStyle: Background style for the error message.
+    - time: Whether to include a timestamp in the message (default: true).
+    - override: Forcefully override the logging mode (default: false).
+    - trace: Whether to include stack trace information (default: true).
+    - escape: Whether to forcefully exit the application after logging (default: true).
+
+logger.setMode(options)
+
+Set the logging mode to control log visibility.
+
+- options: An object containing a silent property. If silent is true, logs will not be visible.
+
+logger.setDefaults(options)
+
+Set default log message formatting options.
+
+- options: An object containing options to update default formatting settings, including:
+    - color: Default text color.
+    - style: Default text style.
+    - bgStyle: Default background style.
+    - type: Type of log you are editing default type for ('log', 'warn', or 'err').
+
+logger.getMode()
+
+Display the current logging mode and its configuration.
+
+logger.getDefaults()
+
+Display the default settings and provide instructions on modifying them.`, { style: 'dim' });
+    }
+
+
+
 }
 
 module.exports = new Logtastic();
